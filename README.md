@@ -8,7 +8,6 @@ Bilgisayar biliminde , yemek filozofları problemi , senkronizasyon sorunların�
 
 <img width="300" alt="den" src="https://user-images.githubusercontent.com/73845925/188264079-3393ab33-6e34-4e20-ac4a-7f7c31a295d8.png">
 
-# Genel Bakış
 
 | Overview                                                                                                            |
 | --------------------------------------------------------------------------------------------------------------------| 
@@ -23,7 +22,6 @@ Bilgisayar biliminde , yemek filozofları problemi , senkronizasyon sorunların�
 | • Her filozofun yemek yemesi gerekir ve asla aç kalmamalıdır.                                                       |
 | • Filozoflar başka bir filozofun ölmek üzere olup olmadığını bilmiyorlar.                                           |
 
-# Kurallar
 
 | Rules                                                                                                               |
 | --------------------------------------------------------------------------------------------------------------------| 
