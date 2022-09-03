@@ -12,7 +12,7 @@ Bilgisayar biliminde , yemek filozofları problemi , senkronizasyon sorunların�
 Masanın ortasında büyük bir kase spagetti var.
 
 • Filozoflar alternatif olarak yer, düşünür veya uyur.
-Yemek yerken ne düşünürler ne de uyurlar; düşünürken yemek yemiyor ve uyumuyorlar;
+• Yemek yerken ne düşünürler ne de uyurlar; düşünürken yemek yemiyor ve uyumuyorlar;
 ve tabii ki uyurken yemek yemiyor ve düşünmüyorlar.
 
 • Masada çatallar da vardır. Filozoflar kadar çatal vardır(n çatal n filozof).
