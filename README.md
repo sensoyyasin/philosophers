@@ -16,6 +16,7 @@ Masanın ortasında büyük bir kase spagetti var.
 ve tabii ki uyurken yemek yemiyor ve düşünmüyorlar.
 
 • Masada çatallar da vardır. Filozoflar kadar çatal vardır(n çatal n filozof).
+
 • Spagettiyi tek çatalla servis etmek ve yemek çok zahmetli olduğundan,
 filozof yemek için sağ ve sol çatallarını her iki eline birer tane alır.
 
