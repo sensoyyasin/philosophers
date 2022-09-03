@@ -1,6 +1,6 @@
 # Philosophers Dining Problem(Dying?)
 
---- I never thought philosophy would be so deadly ---
+---> 🪦 I never thought philosophy would be so deadly 🪦 <---
 
 Bilgisayar biliminde , yemek filozofları problemi , senkronizasyon sorunlarını ve bunları çözme tekniklerini göstermek için eşzamanlı algoritma tasarımında sıklıkla kullanılan örnek bir problemdir .
 
