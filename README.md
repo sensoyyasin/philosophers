@@ -31,9 +31,6 @@ Bilgisayar biliminde , yemek filozofları problemi , senkronizasyon sorunların�
 | • time_to_die (ms) : Bir filozofun aç kaldığında ölme süresi.                                                       |                                 
 | • time_to_eat (ms) : Bir filozofun yemek yemesi için geçen süre.                                                    |
 | • time_to_sleep (ms) : Bir filozofun uyuyarak geçireceği süre.                                                      |
-
-
-| --------------------------------------------------------------------------------------------------------------------| 
 | • Her filozofun 1'den sona kadar değişen bir numarası vardır.                                                       |
 | • 1 Numaralı filozofun oturduğunu varsayalım.                                                                       |
 | • N numaralı başka herhangi bir filozof N-1 numaralı filozof ile N+1 numaralı filozof arasına oturur.               | 
