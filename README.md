@@ -21,6 +21,7 @@ ve tabii ki uyurken yemek yemiyor ve düşünmüyorlar.
 filozof yemek için sağ ve sol çatallarını her iki eline birer tane alır.
 
 • Filozof yemeğini bitirince çatallarını masaya koyar ve uyumaya başlar. Uyandıklarında tekrar düşünmeye başlarlar. Bir filozof açlıktan öldüğünde simülasyon durur(starving).
+
 • Her filozofun yemek yemesi gerekir ve asla aç kalmamalıdır.
 • Filozoflar birbirleriyle konuşamazlar.
 • Filozoflar başka bir filozofun ölmek üzere olup olmadığını bilmiyorlar.
