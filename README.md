@@ -4,7 +4,7 @@ Bilgisayar biliminde , yemek filozofları problemi , senkronizasyon sorunların�
 
 İlk olarak 1965 yılında Edsger Dijkstra tarafından teyp sürücüsü çevre birimlerine erişim için rekabet eden bilgisayarlar açısından sunulan bir öğrenci sınav alıştırması olarak formüle edilmiştir. Kısa bir süre sonra, Tony Hoare soruna mevcut şeklini verdi.
 
-<img width="250" alt="den" src="https://user-images.githubusercontent.com/73845925/188264079-3393ab33-6e34-4e20-ac4a-7f7c31a295d8.png">
+<img width="300" alt="den" src="https://user-images.githubusercontent.com/73845925/188264079-3393ab33-6e34-4e20-ac4a-7f7c31a295d8.png">
 
 # Genel Bakış
 
