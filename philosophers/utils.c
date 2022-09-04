@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ysensoy <ysensoy@student.42.fr>            +#+  +:+       +#+        */
+/*   By: yasinsensoy <yasinsensoy@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 18:04:28 by ysensoy           #+#    #+#             */
-/*   Updated: 2022/08/31 18:04:28 by ysensoy          ###   ########.fr       */
+/*   Updated: 2022/09/03 21:27:38 by yasinsensoy      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,36 @@ int	ft_atoi(char *str)
 	return(result * sign);
 }
 
-int	arg_controller(int argc, char **argv)
+void	arg_controller(int argc, char **argv)
 {
-	if (argc != 5 || argc != 6)
+	int i;
+
+	i = 1;
+	if (argc != 5 && argc != 6)
 	{
 		write(1, "Number of argument is fault🔪\n", 29);
 		exit(1);
 	}
+	while (argv[i] != '\0')
+	{
+		if (ft_atoi(argv[i] <= 0))
+		{
+			i++;
+			printf("You should use different number🔢 \n");
+			exit(1);
+		}
+	}
+}
+
+long	timeinc(long timestamp)
+{
+	struct timeval tv;
+	long	current;
+
+	gettimeofday(&tv, NULL);
+	current = (tv.tv_sec * 1000) + (tv.tv_usec / 1000);
+	if (!timestamp)
+		return(current);
+	else
+		return(current - timestamp);
 }
