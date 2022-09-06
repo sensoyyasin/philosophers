@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philosophers.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yasinsensoy <yasinsensoy@student.42.fr>    +#+  +:+       +#+        */
+/*   By: ysensoy <ysensoy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 16:50:29 by ysensoy           #+#    #+#             */
-/*   Updated: 2022/09/03 21:25:46 by yasinsensoy      ###   ########.fr       */
+/*   Updated: 2022/09/06 20:32:29 by ysensoy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	setter(t_setter *ptr, char **argv)
 	if (argv[5] != NULL)
 		ptr->eat_destination_timer = ft_atoi(argv[5]);
 	ptr->philosoph = malloc(sizeof(t_philo) * ptr->philosoph_counter);
-	ptr->situation = malloc(sizeof(t_philo) * ptr->philosoph_counter);
+	ptr->situation = malloc(ptr->philosoph_counter);
 	pthread_mutex_init(&ptr->right_fort, NULL);
 	pthread_mutex_init(&ptr->left_fork, NULL);
 	while (ptr->philosoph_counter > i)
@@ -37,7 +37,7 @@ void	setter(t_setter *ptr, char **argv)
 		ptr->philosoph[i].philo_position = 0;
 		i++;
 	}
-	
+
 
 }
 
@@ -46,13 +46,13 @@ int main(int argc, char **argv)
 	t_setter	a;
 	int			i;
 	int			j;
-	
+
 	i = 0;
 	arg_controller(argc, argv);
 	setter(&a, argv);
 	while (a.philosoph_counter > i)
 	{
-		pthread_create(&a.philosoph[i].tid, NULL);
+		pthread_create(&a.philosoph[i].tid, NULL, &has_taken_fork, NULL);
 		i++;
 	}
 	j = 0;
