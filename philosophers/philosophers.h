@@ -6,7 +6,7 @@
 /*   By: ysensoy <ysensoy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 16:39:46 by ysensoy           #+#    #+#             */
-/*   Updated: 2022/09/06 20:33:25 by ysensoy          ###   ########.fr       */
+/*   Updated: 2022/09/07 17:01:14 by ysensoy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,9 @@ struct timeval tv;
 
 typedef	struct philo
 {
-	pthread_t		tid;
+	pthread_t		t_id;
 	struct setter *setter;
 	int 		philo_position;
-	int			philo_counter;
 	int			full;
 	int 		eat;
 	long long	last_eat;
@@ -40,7 +39,7 @@ typedef	struct philo
 
 typedef struct setter
 {
-	pthread_mutex_t	right_fort;
+	pthread_mutex_t	right_fork;
 	pthread_mutex_t	left_fork;
 	t_philo		*philosoph;
 	char		*situation;
@@ -57,5 +56,9 @@ int		ft_atoi(char *str);
 void	arg_controller(int argc, char **argv);
 long	timeinc(long timestamp);
 void    has_taken_fork(t_philo *ptr);
+void    mainer(t_philo *philo);
+void    eat(t_philo *philo);
+void    sleep(t_philo *philo);
+void    think(t_philo *philo);
 
 #endif

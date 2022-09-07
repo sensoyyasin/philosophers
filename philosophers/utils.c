@@ -6,7 +6,7 @@
 /*   By: ysensoy <ysensoy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 18:04:28 by ysensoy           #+#    #+#             */
-/*   Updated: 2022/09/05 17:10:27 by ysensoy          ###   ########.fr       */
+/*   Updated: 2022/09/07 16:59:28 by ysensoy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	arg_controller(int argc, char **argv)
 		write(1, "Number of argument is fault🔪\n", 29);
 		exit(1);
 	}
-	while (argv[i] != '\0')
+	while (argv[i] != NULL)
 	{
 		if (ft_atoi(argv[i] <= 0))
 		{

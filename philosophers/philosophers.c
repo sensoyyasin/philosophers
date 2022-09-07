@@ -6,7 +6,7 @@
 /*   By: ysensoy <ysensoy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 16:50:29 by ysensoy           #+#    #+#             */
-/*   Updated: 2022/09/06 20:32:29 by ysensoy          ###   ########.fr       */
+/*   Updated: 2022/09/07 17:33:02 by ysensoy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	setter(t_setter *ptr, char **argv)
 		ptr->eat_destination_timer = ft_atoi(argv[5]);
 	ptr->philosoph = malloc(sizeof(t_philo) * ptr->philosoph_counter);
 	ptr->situation = malloc(ptr->philosoph_counter);
-	pthread_mutex_init(&ptr->right_fort, NULL);
+	pthread_mutex_init(&ptr, NULL);
 	pthread_mutex_init(&ptr->left_fork, NULL);
 	while (ptr->philosoph_counter > i)
 	{
@@ -52,13 +52,13 @@ int main(int argc, char **argv)
 	setter(&a, argv);
 	while (a.philosoph_counter > i)
 	{
-		pthread_create(&a.philosoph[i].tid, NULL, &has_taken_fork, NULL);
+		pthread_create(&a.philosoph[i].t_id, NULL, &mainer, NULL);
 		i++;
 	}
 	j = 0;
 	while (a.philosoph_counter > j)
 	{
-		pthread_join(a.philosoph[j].tid, NULL);
+		pthread_join(a.philosoph[j].t_id, NULL);
 		j++;
 	}
 	return(0);
