@@ -36,4 +36,13 @@ Bilgisayar biliminde , yemek filozofları problemi , senkronizasyon sorunların�
 | • N numaralı başka herhangi bir filozof N-1 numaralı filozof ile N+1 numaralı filozof arasına oturur.               | 
 
 
+# 🔑 Execute
+
+Example: Without number_of_times_each_philosopher_must_eat Argument ./philo 4 500 200 200
+Example: With number_of_times_each_philosopher_must_eat Argument ./philo 7 310 100 100 7
+
+# ⚙️ Compilation
+
+Compiling The First Program (Mandatory Part): make philo/
+
 ![figure2](https://user-images.githubusercontent.com/73845925/188264076-d4a0dd94-4671-4d17-ba10-173e76844426.gif)
