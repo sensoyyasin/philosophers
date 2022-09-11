@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philosophers.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ysensoy <ysensoy@student.42.fr>            +#+  +:+       +#+        */
+/*   By: yasinsensoy <yasinsensoy@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 16:39:46 by ysensoy           #+#    #+#             */
-/*   Updated: 2022/09/07 17:01:14 by ysensoy          ###   ########.fr       */
+/*   Updated: 2022/09/11 18:27:29 by yasinsensoy      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 # include <sys/time.h>
 
 typedef	struct setter t_setter;
-struct timeval tv;
+struct timeval current_time;
 
 
 typedef	struct philo
@@ -51,14 +51,16 @@ typedef struct setter
 	int			eat_counter;
 }		t_setter;
 
+//mainer
+void    *mainer(void *philo);
+void    eat(t_philo *philo);
+void    sleeper(t_philo *philo);
+void    think(t_philo *philo);
 
+//utils
 int		ft_atoi(char *str);
 void	arg_controller(int argc, char **argv);
 long	timeinc(long timestamp);
 void    has_taken_fork(t_philo *ptr);
-void    mainer(t_philo *philo);
-void    eat(t_philo *philo);
-void    sleep(t_philo *philo);
-void    think(t_philo *philo);
 
 #endif

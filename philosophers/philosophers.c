@@ -3,14 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   philosophers.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ysensoy <ysensoy@student.42.fr>            +#+  +:+       +#+        */
+/*   By: yasinsensoy <yasinsensoy@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 16:50:29 by ysensoy           #+#    #+#             */
-/*   Updated: 2022/09/07 17:33:02 by ysensoy          ###   ########.fr       */
+/*   Updated: 2022/09/11 18:40:43 by yasinsensoy      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
+
+int	program_ender(t_setter	*setter)
+{
+	pthread_mutex_destroy(&setter->right_fork);
+	pthread_mutex_destroy(&setter->left_fork);
+	free(setter->philosoph);
+	free(setter->situation);
+	free(setter->philosoph->t_id);
+	free(setter);
+	return(0);
+}
 
 void	setter(t_setter *ptr, char **argv)
 {
@@ -58,8 +69,8 @@ int main(int argc, char **argv)
 	j = 0;
 	while (a.philosoph_counter > j)
 	{
-		pthread_join(a.philosoph[j].t_id, NULL);
+		pthread_join(a.philosoph[j].t_id, NULL); //pthread_join fonksiyonu ile, bir thread'in sonlanmasını bekleyebiliriz. Bu fonksiyonun kullanıldığı thread, sonlanması beklenen thread sonlanana kadar bloklanacaktır.
 		j++;
 	}
-	return(0);
+	return(program_ender(&a));
 }

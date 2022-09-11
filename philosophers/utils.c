@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ysensoy <ysensoy@student.42.fr>            +#+  +:+       +#+        */
+/*   By: yasinsensoy <yasinsensoy@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 18:04:28 by ysensoy           #+#    #+#             */
-/*   Updated: 2022/09/07 16:59:28 by ysensoy          ###   ########.fr       */
+/*   Updated: 2022/09/11 19:01:23 by yasinsensoy      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,8 @@ void	arg_controller(int argc, char **argv)
 	i = 1;
 	if (argc != 5 && argc != 6)
 	{
-		write(1, "Number of argument is fault🔪\n", 29);
-		exit(1);
+		write(1, "Number of argument is fault❌❌\n", 30);
+		pthread_exit(1);
 	}
 	while (argv[i] != NULL)
 	{
@@ -49,20 +49,32 @@ void	arg_controller(int argc, char **argv)
 		{
 			i++;
 			printf("You should use different number🔢 \n");
-			exit(1);
+			pthread_exit(1);
 		}
 	}
 }
 
+void	fy_printf(t_philo *ptr, char *str)
+{
+	pthread_mutex_lock(&ptr->setter->left_fork);
+	printf("Time : %ld | Philosoph_id : %d | %s\n",
+		timeinc(ptr->timestamp), ptr->philo_position + 1, str);
+	pthread_mutex_unlock(&ptr->setter->left_fork);
+}
+
 long	timeinc(long timestamp)
 {
-	struct timeval tv;
-	long	current;
+	struct timeval current_time;
 
-	gettimeofday(&tv, NULL);
-	current = (tv.tv_sec * 1000) + (tv.tv_usec / 1000);
-	if (!timestamp)
-		return(current);
-	else
-		return(current - timestamp);
+	gettimeofday(&current_time, NULL);
+	return((current_time.tv_sec * 1000) + (current_time.tv_usec / 1000));
+}
+
+void	ft_sleep(int now)
+{
+	long long timestamp;
+
+	timestamp = timeinc(0);
+	while (timeinc(0) - timestamp < now)
+		usleep(100);
 }

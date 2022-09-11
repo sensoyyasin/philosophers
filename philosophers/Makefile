@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ysensoy <ysensoy@student.42.fr>            +#+  +:+       +#+         #
+#    By: yasinsensoy <yasinsensoy@student.42.fr>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/07 18:04:43 by ysensoy           #+#    #+#              #
-#    Updated: 2022/09/07 18:04:44 by ysensoy          ###   ########.fr        #
+#    Updated: 2022/09/11 18:26:43 by yasinsensoy      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 

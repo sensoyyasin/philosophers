@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mainer.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ysensoy <ysensoy@student.42.fr>            +#+  +:+       +#+        */
+/*   By: yasinsensoy <yasinsensoy@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/05 17:10:34 by ysensoy           #+#    #+#             */
-/*   Updated: 2022/09/07 18:04:38 by ysensoy          ###   ########.fr       */
+/*   Updated: 2022/09/11 19:04:33 by yasinsensoy      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,26 +35,26 @@ void    has_taken_fork(t_philo *ptr)
     pthread_mutex_unlock(&ptr->setter->right_fork);
 }
 
-void    mainer(t_philo *philo)
+void    *mainer(void *philo)
 {
-    t_philo *philo;
+    t_philo *phil;
 
-    philo = (t_philo *)philo;
-    philo->last_eat = timeinc(0);
+    phil = (t_philo *)philo;
+    phil->last_eat = timeinc(0);
     while (1)
     {
-        if (philo->philo_position % 2 != 0)
+        if (phil->philo_position % 2 != 0) //Tekleri uyutuyorum
             usleep(200);
-        if (philo->setter->eat_counter && philo->setter->eat_destination_timer
-            >= philo->setter->philosoph_counter)
+        if (phil->setter->eat_counter && phil->setter->eat_destination_timer
+            >= phil->setter->philosoph_counter)
         {
-            pthread_mutex_lock(&philo->setter->left_fork);
+            pthread_mutex_lock(&phil->setter->left_fork);
             printf("The food was eaten\n");
-            exit(0);
+            pthread_exit(0);
         }
-        think(philo);
-        eat(philo);
-        sleep(philo);
+        think(phil);
+        eat(phil);
+        sleeper(phil);
     }
     return(NULL);
 }
@@ -72,9 +72,10 @@ void    think(t_philo *philo)
             {
                 timestamp = timeinc(philo->timestamp);
                 pthread_mutex_lock(&philo->setter->left_fork);
-                printf("Philosoph is sleeping right now🌙\n");
+                printf("The philosopher died💀\n");
+                pthread_exit(0);
             }
-            exit(0);
+            pthread_exit(0);
         }
         sleep(100);
     }
@@ -98,7 +99,26 @@ void    eat(t_philo *philo)
     }
 }
 
-void    sleep(t_philo *philo)
+void    sleeper(t_philo *philo)
 {
-    if (philo)
+    long long   x;
+    if (philo->setter->situation[philo->philo_position])
+    {
+        printf("Philosoph is sleeping right now🌙💤\n");
+        pthread_mutex_lock(&philo->setter->right_fork);
+        philo->setter->situation[philo->philo_position] = 0;
+        pthread_mutex_unlock(&philo->setter->right_fork);
+        x = timeinc(0);
+        while (philo->setter->sleep_time > timeinc(0) - x)
+        {
+            if (timeinc(philo->last_eat) >= philo->setter->dead_time)
+            {
+                pthread_mutex_lock(&philo->setter->left_fork);
+                printf("%ld %d The philosopher died💀\n");
+                pthread_exit(0);
+            }
+            sleep(100);
+        }
+        printf("Philo is thinking🤔🤔");
+    }
 }
