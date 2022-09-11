@@ -39,6 +39,7 @@ Bilgisayar biliminde , yemek filozofları problemi , senkronizasyon sorunların�
 # 🔑 Execute
 
 Example: Without number_of_times_each_philosopher_must_eat Argument ./philo 4 500 200 200
+
 Example: With number_of_times_each_philosopher_must_eat Argument ./philo 7 310 100 100 7
 
 # ⚙️ Compilation
