@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yasinsensoy <yasinsensoy@student.42.fr>    +#+  +:+       +#+        */
+/*   By: ysensoy <ysensoy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 18:04:28 by ysensoy           #+#    #+#             */
-/*   Updated: 2022/09/11 19:01:23 by yasinsensoy      ###   ########.fr       */
+/*   Updated: 2022/09/12 15:28:14 by ysensoy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	ft_atoi(char *str)
 		sign *= -1;
 	if (*str == '-' || *str == '+')
 		str++;
-	if (*str >= '0' && * str <= '9')
+	if (*str >= '0' && *str <= '9')
 	{
 		result = result * 10 - *str + 48;
 		str++;
@@ -40,16 +40,16 @@ void	arg_controller(int argc, char **argv)
 	i = 1;
 	if (argc != 5 && argc != 6)
 	{
-		write(1, "Number of argument is fault❌❌\n", 30);
-		pthread_exit(1);
+		write(1, "Number of argument is fault ❌\n", 31);
+		break;
 	}
 	while (argv[i] != NULL)
 	{
-		if (ft_atoi(argv[i] <= 0))
+		if ((ft_atoi(argv[i]) <= 0))
 		{
 			i++;
 			printf("You should use different number🔢 \n");
-			pthread_exit(1);
+			break;
 		}
 	}
 }

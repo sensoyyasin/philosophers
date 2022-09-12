@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mainer.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yasinsensoy <yasinsensoy@student.42.fr>    +#+  +:+       +#+        */
+/*   By: ysensoy <ysensoy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/05 17:10:34 by ysensoy           #+#    #+#             */
-/*   Updated: 2022/09/11 19:04:33 by yasinsensoy      ###   ########.fr       */
+/*   Updated: 2022/09/12 15:27:46 by ysensoy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void    has_taken_fork(t_philo *ptr)
     i = ptr->setter->philosoph_counter;
     r_fork = (ptr->philo_position + 1) % i;
     l_fork = (ptr->philo_position - 1 + i) % i;
-    situation = ptr->philo_position;
+    situation = ptr->setter->situation;
     pthread_mutex_lock(&ptr->setter->right_fork);
     if (!situation[l_fork] && !situation[r_fork] && !situation[ptr->philo_position])
     {
@@ -43,23 +43,23 @@ void    *mainer(void *philo)
     phil->last_eat = timeinc(0);
     while (1)
     {
-        if (phil->philo_position % 2 != 0) //Tekleri uyutuyorum
+        if (phil->philo_position % 2 != 0)
             usleep(200);
         if (phil->setter->eat_counter && phil->setter->eat_destination_timer
             >= phil->setter->philosoph_counter)
         {
             pthread_mutex_lock(&phil->setter->left_fork);
             printf("The food was eaten\n");
-            pthread_exit(0);
+            break;
         }
-        think(phil);
-        eat(phil);
-        sleeper(phil);
+        thinking(phil);
+        eating(phil);
+        sleeping(phil);
     }
     return(NULL);
 }
 
-void    think(t_philo *philo)
+void    thinking(t_philo *philo)
 {
     long timestamp;
 
@@ -73,21 +73,21 @@ void    think(t_philo *philo)
                 timestamp = timeinc(philo->timestamp);
                 pthread_mutex_lock(&philo->setter->left_fork);
                 printf("The philosopher died💀\n");
-                pthread_exit(0);
+                break;
             }
-            pthread_exit(0);
+            break;
         }
         sleep(100);
     }
     usleep(100);
 }
 
-void    eat(t_philo *philo)
+void    eating(t_philo *philo)
 {
     if (philo->setter->situation[philo->philo_position])
     {
         philo->last_eat = timeinc(0);
-        printf("Eating🍕\n");
+        printf("Philo is eating🍕\n");
         sleep(100);
         if (philo->eat < philo->setter->eat_destination_timer)
             philo->eat++;
@@ -99,7 +99,7 @@ void    eat(t_philo *philo)
     }
 }
 
-void    sleeper(t_philo *philo)
+void    sleeping(t_philo *philo)
 {
     long long   x;
     if (philo->setter->situation[philo->philo_position])
@@ -114,11 +114,11 @@ void    sleeper(t_philo *philo)
             if (timeinc(philo->last_eat) >= philo->setter->dead_time)
             {
                 pthread_mutex_lock(&philo->setter->left_fork);
-                printf("%ld %d The philosopher died💀\n");
-                pthread_exit(0);
+                printf("The philosopher died💀\n");
+                break;
             }
             sleep(100);
         }
-        printf("Philo is thinking🤔🤔");
+        printf("Philo is thinking...");
     }
 }

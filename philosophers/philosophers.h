@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philosophers.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yasinsensoy <yasinsensoy@student.42.fr>    +#+  +:+       +#+        */
+/*   By: ysensoy <ysensoy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 16:39:46 by ysensoy           #+#    #+#             */
-/*   Updated: 2022/09/11 18:27:29 by yasinsensoy      ###   ########.fr       */
+/*   Updated: 2022/09/12 15:04:45 by ysensoy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,6 @@
 # include <sys/time.h>
 
 typedef	struct setter t_setter;
-struct timeval current_time;
-
 
 typedef	struct philo
 {
@@ -53,9 +51,9 @@ typedef struct setter
 
 //mainer
 void    *mainer(void *philo);
-void    eat(t_philo *philo);
-void    sleeper(t_philo *philo);
-void    think(t_philo *philo);
+void    eating(t_philo *philo);
+void    sleeping(t_philo *philo);
+void    thinking(t_philo *philo);
 
 //utils
 int		ft_atoi(char *str);

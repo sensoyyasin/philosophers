@@ -3,28 +3,28 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: yasinsensoy <yasinsensoy@student.42.fr>    +#+  +:+       +#+         #
+#    By: ysensoy <ysensoy@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/07 18:04:43 by ysensoy           #+#    #+#              #
-#    Updated: 2022/09/11 18:26:43 by yasinsensoy      ###   ########.fr        #
+#    Updated: 2022/09/12 15:25:48 by ysensoy          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = philosophers.a
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror -pthread
+CFLAGS = -pthread -Wall -Wextra -Werror
 SRC = $(wildcard *.c)
 OBJ = $(SRC:.c = .o)
 
 all: $(NAME)
 
-$(NAME):
-	$(CC) $(CLAFGS) $(SRC) $(OBJ)
+$(NAME): $(OBJ)
+	$(CC) $(CLAFGS) $(OBJ) -o $(NAME)
 
 clean:
-	@rm -rf *.o
+	@rm $(OBJ)
 
 fclean: clean
-	@rm -rf $(NAME)
+	@rm $(NAME)
 
 re: fclean all

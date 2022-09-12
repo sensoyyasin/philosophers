@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philosophers.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yasinsensoy <yasinsensoy@student.42.fr>    +#+  +:+       +#+        */
+/*   By: ysensoy <ysensoy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 16:50:29 by ysensoy           #+#    #+#             */
-/*   Updated: 2022/09/11 18:40:43 by yasinsensoy      ###   ########.fr       */
+/*   Updated: 2022/09/12 15:27:55 by ysensoy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	setter(t_setter *ptr, char **argv)
 		ptr->eat_destination_timer = ft_atoi(argv[5]);
 	ptr->philosoph = malloc(sizeof(t_philo) * ptr->philosoph_counter);
 	ptr->situation = malloc(ptr->philosoph_counter);
-	pthread_mutex_init(&ptr, NULL);
+	pthread_mutex_init(&ptr->right_fork, NULL);
 	pthread_mutex_init(&ptr->left_fork, NULL);
 	while (ptr->philosoph_counter > i)
 	{
