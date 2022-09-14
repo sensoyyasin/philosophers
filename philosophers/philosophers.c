@@ -6,7 +6,7 @@
 /*   By: ysensoy <ysensoy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 16:50:29 by ysensoy           #+#    #+#             */
-/*   Updated: 2022/09/12 15:27:55 by ysensoy          ###   ########.fr       */
+/*   Updated: 2022/09/14 16:10:13 by ysensoy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,11 @@ void	setter(t_setter *ptr, char **argv)
 	int	i;
 
 	i = 0;
-	ptr->philosoph_counter = ft_atoi(argv[1]);
-	ptr->dead_time = ft_atoi(argv[2]);
-	ptr->eat_time = ft_atoi(argv[3]);
-	ptr->sleep_time = ft_atoi(argv[4]);
-	ptr->eat_counter = 0;
+	ptr->philosoph_counter = ft_atoi(argv[1]); //filozof sayisi
+	ptr->dead_time = ft_atoi(argv[2]); //ölme zamani
+	ptr->eat_time = ft_atoi(argv[3]); //yemek zamani
+	ptr->sleep_time = ft_atoi(argv[4]); //uyuma zamani
+	ptr->eat_counter = 0; //yeme hedefi
 	if (argv[5] != NULL)
 		ptr->eat_destination_timer = ft_atoi(argv[5]);
 	ptr->philosoph = malloc(sizeof(t_philo) * ptr->philosoph_counter);
@@ -48,8 +48,6 @@ void	setter(t_setter *ptr, char **argv)
 		ptr->philosoph[i].philo_position = 0;
 		i++;
 	}
-
-
 }
 
 int main(int argc, char **argv)
@@ -61,15 +59,16 @@ int main(int argc, char **argv)
 	i = 0;
 	arg_controller(argc, argv);
 	setter(&a, argv);
-	while (a.philosoph_counter > i)
+	exit(0);
+	while (a.philosoph_counter > i - 1)
 	{
-		pthread_create(&a.philosoph[i].t_id, NULL, &mainer, NULL);
+		pthread_create(&a.philosoph[i].t_id, NULL, &mainer, &a.philosoph[i]);
 		i++;
 	}
 	j = 0;
-	while (a.philosoph_counter > j)
+	while (a.philosoph_counter > j - 1)
 	{
-		pthread_join(a.philosoph[j].t_id, NULL); //pthread_join fonksiyonu ile, bir thread'in sonlanmasını bekleyebiliriz. Bu fonksiyonun kullanıldığı thread, sonlanması beklenen thread sonlanana kadar bloklanacaktır.
+		pthread_join(a.philosoph[j].t_id, NULL);
 		j++;
 	}
 	return(program_ender(&a));

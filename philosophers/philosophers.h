@@ -6,7 +6,7 @@
 /*   By: ysensoy <ysensoy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 16:39:46 by ysensoy           #+#    #+#             */
-/*   Updated: 2022/09/12 15:04:45 by ysensoy          ###   ########.fr       */
+/*   Updated: 2022/09/12 17:09:55 by ysensoy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,5 +60,8 @@ int		ft_atoi(char *str);
 void	arg_controller(int argc, char **argv);
 long	timeinc(long timestamp);
 void    has_taken_fork(t_philo *ptr);
+void	fy_printf(t_philo *ptr, char *str);
+void	ft_sleep(int now);
+long	timeinc(long timestamp);
 
 #endif

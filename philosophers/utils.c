@@ -6,7 +6,7 @@
 /*   By: ysensoy <ysensoy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 18:04:28 by ysensoy           #+#    #+#             */
-/*   Updated: 2022/09/12 15:28:14 by ysensoy          ###   ########.fr       */
+/*   Updated: 2022/09/14 13:17:55 by ysensoy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,15 +19,15 @@ int	ft_atoi(char *str)
 
 	result = 0;
 	sign = 1;
-	while (*str != '\0' && (*str >= 9 && *str <= 13))
+	while (*str == ' ' || (*str >= 9 && *str <= 13))
 		str++;
 	if (*str == '-')
 		sign *= -1;
 	if (*str == '-' || *str == '+')
 		str++;
-	if (*str >= '0' && *str <= '9')
+	while (*str >= '0' && *str <= '9')
 	{
-		result = result * 10 - *str + 48;
+		result = result * 10 + *str - 48;
 		str++;
 	}
 	return(result * sign);
@@ -41,16 +41,16 @@ void	arg_controller(int argc, char **argv)
 	if (argc != 5 && argc != 6)
 	{
 		write(1, "Number of argument is fault ❌\n", 31);
-		break;
+		exit(0);
 	}
 	while (argv[i] != NULL)
 	{
 		if ((ft_atoi(argv[i]) <= 0))
 		{
-			i++;
 			printf("You should use different number🔢 \n");
-			break;
+			exit(0);
 		}
+		i++;
 	}
 }
 
