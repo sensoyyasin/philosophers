@@ -6,7 +6,7 @@
 /*   By: ysensoy <ysensoy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 16:50:29 by ysensoy           #+#    #+#             */
-/*   Updated: 2022/09/14 16:10:13 by ysensoy          ###   ########.fr       */
+/*   Updated: 2022/09/14 18:39:25 by ysensoy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ void	setter(t_setter *ptr, char **argv)
 		ptr->philosoph[i].full = 0;
 		ptr->philosoph[i].think = 0;
 		ptr->philosoph[i].philo_position = 0;
+		ptr->philosoph[i].timestamp = timeinc(0);
+		ptr->philosoph[i].setter = ptr;
 		i++;
 	}
 }
@@ -59,7 +61,6 @@ int main(int argc, char **argv)
 	i = 0;
 	arg_controller(argc, argv);
 	setter(&a, argv);
-	exit(0);
 	while (a.philosoph_counter > i - 1)
 	{
 		pthread_create(&a.philosoph[i].t_id, NULL, &mainer, &a.philosoph[i]);
