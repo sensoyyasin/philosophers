@@ -6,7 +6,7 @@
 /*   By: ysensoy <ysensoy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/05 17:10:34 by ysensoy           #+#    #+#             */
-/*   Updated: 2022/09/14 16:23:07 by ysensoy          ###   ########.fr       */
+/*   Updated: 2022/09/14 20:01:25 by ysensoy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ void    eating(t_philo *philo)
     {
         philo->last_eat = timeinc(0);
         fy_printf(philo, "is eating 🍕");
-        sleep(100);
+        ft_sleep(philo->setter->eat_time);
         if (philo->eat < philo->setter->eat_destination_timer)
             philo->eat++;
         if (!philo->full && philo->eat == philo->setter->eat_destination_timer)
