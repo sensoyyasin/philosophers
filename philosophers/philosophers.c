@@ -6,7 +6,7 @@
 /*   By: ysensoy <ysensoy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 16:50:29 by ysensoy           #+#    #+#             */
-/*   Updated: 2022/09/14 19:59:33 by ysensoy          ###   ########.fr       */
+/*   Updated: 2022/09/21 17:26:14 by ysensoy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,12 @@
 
 int	program_ender(t_setter	*setter)
 {
-	pthread_mutex_destroy(&setter->right_fork);
-	pthread_mutex_destroy(&setter->left_fork);
+	int	i;
+
+	i = -1;
+	while (++i < setter->philosoph_counter)
+		pthread_mutex_destroy(&setter->forks[i]);
+	free(setter->forks);
 	free(setter->philosoph);
 	free(setter->situation);
 	free(setter->philosoph->t_id);
@@ -32,22 +36,22 @@ void	setter(t_setter *ptr, char **argv)
 	ptr->dead_time = ft_atoi(argv[2]); //ölme zamani
 	ptr->eat_time = ft_atoi(argv[3]); //yemek zamani
 	ptr->sleep_time = ft_atoi(argv[4]); //uyuma zamani
-	ptr->eat_counter = 0; //yeme hedefi
+	ptr->destp_count = 0;
+	ptr->forks = malloc(sizeof(pthread_mutex_t) * ptr->philosoph_counter);
 	if (argv[5] != NULL)
-		ptr->eat_destination_timer = ft_atoi(argv[5]);
+		ptr->eat_destination = ft_atoi(argv[5]); //eat_destination_time
 	ptr->philosoph = malloc(sizeof(t_philo) * ptr->philosoph_counter);
 	ptr->situation = malloc(ptr->philosoph_counter);
-	pthread_mutex_init(&ptr->right_fork, NULL);
-	pthread_mutex_init(&ptr->left_fork, NULL);
+	pthread_mutex_init(&ptr->dest_philo, NULL);
+	pthread_mutex_init(&ptr->msg, NULL);
 	while (ptr->philosoph_counter > i)
 	{
 		ptr->philosoph[i].setter = ptr;
 		ptr->philosoph[i].timestamp = timeinc(0);
 		ptr->situation[i] = 0;
 		ptr->philosoph[i].eat = 0;
-		ptr->philosoph[i].full = 0;
-		ptr->philosoph[i].think = 0;
-		ptr->philosoph[i].philo_position = 0;
+		ptr->philosoph[i].philo_position = i;
+		pthread_mutex_init(&ptr->forks[i], NULL);
 		i++;
 	}
 }
@@ -56,21 +60,23 @@ int main(int argc, char **argv)
 {
 	t_setter	a;
 	int			i;
-	int			j;
 
 	i = 0;
-	arg_controller(argc, argv);
+	a.death_check = 0;
+	a.eat_check = 0;
+	if (arg_controller(argc, argv) == -1)
+		return(1);
 	setter(&a, argv);
 	while (a.philosoph_counter > i)
 	{
 		pthread_create(&a.philosoph[i].t_id, NULL, &mainer, &a.philosoph[i]);
 		i++;
 	}
-	j = 0;
-	while (a.philosoph_counter > j)
+	i = 0;
+	while (a.philosoph_counter > i)
 	{
-		pthread_join(a.philosoph[j].t_id, NULL);
-		j++;
+		pthread_join(a.philosoph[i].t_id , NULL);
+		i++;
 	}
-	return(program_ender(&a));
+	return(0);
 }

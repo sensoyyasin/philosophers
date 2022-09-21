@@ -6,7 +6,7 @@
 /*   By: ysensoy <ysensoy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 18:04:28 by ysensoy           #+#    #+#             */
-/*   Updated: 2022/09/14 19:57:25 by ysensoy          ###   ########.fr       */
+/*   Updated: 2022/09/21 17:18:01 by ysensoy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,41 +33,53 @@ int	ft_atoi(char *str)
 	return(result * sign);
 }
 
-void	arg_controller(int argc, char **argv)
+int 	arg_controller(int argc, char **argv)
 {
 	int i;
 
 	i = 1;
 	if (argc != 5 && argc != 6)
 	{
-		write(1, "Number of argument is fault ❌\n", 31);
-		exit(0);
+		write(2, "Number of argument is fault ❌\n", 32);
+		return(-1);
 	}
 	while (argv[i] != NULL)
 	{
 		if ((ft_atoi(argv[i]) <= 0))
 		{
 			printf("You should use different number🔢 \n");
-			exit(0);
+			return(-1);
 		}
 		i++;
 	}
+	return(0);
 }
 
-void	fy_printf(t_philo *ptr, char *str)
+int		fy_printf(t_philo *ptr, char *str)
 {
-	pthread_mutex_lock(&ptr->setter->left_fork);
+	pthread_mutex_lock(&ptr->setter->msg);
+	if (ptr->setter->death_check == 1 || ptr->setter->eat_check == 1)
+	{
+		pthread_mutex_unlock(&ptr->setter->msg);
+		return(0);
+	}
 	printf("Time : %ld | Philosoph_id : %d | %s\n",
 		timeinc(ptr->timestamp), ptr->philo_position + 1, str);
-	pthread_mutex_unlock(&ptr->setter->left_fork);
+	pthread_mutex_unlock(&ptr->setter->msg);
+	return(1);
 }
 
 long	timeinc(long timestamp)
 {
+	long long now;
 	struct timeval current_time;
 
 	gettimeofday(&current_time, NULL);
-	return((current_time.tv_sec * 1000) + (current_time.tv_usec / 1000));
+	now = (current_time.tv_sec * 1000) + (current_time.tv_usec / 1000);
+	if (!timestamp)
+		return(now);
+	else
+		return(now - timestamp);
 }
 
 void	ft_sleep(int now)

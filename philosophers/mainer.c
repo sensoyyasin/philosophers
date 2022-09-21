@@ -6,119 +6,122 @@
 /*   By: ysensoy <ysensoy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/05 17:10:34 by ysensoy           #+#    #+#             */
-/*   Updated: 2022/09/14 20:01:25 by ysensoy          ###   ########.fr       */
+/*   Updated: 2022/09/21 17:09:18 by ysensoy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-void    has_taken_fork(t_philo *ptr)
+int    has_taken_fork(t_philo *ptr)
 {
-    int i;
-    int r_fork;
-    int l_fork;
-    char *situation;
+	int i;
+	char *situation;
 
-    if (ptr->setter->philosoph_counter < 2)
-        return ;
-    i = ptr->setter->philosoph_counter;
-    r_fork = (ptr->philo_position + 1) % i;
-    l_fork = (ptr->philo_position - 1 + i) % i;
-    situation = ptr->setter->situation;
-    pthread_mutex_lock(&ptr->setter->right_fork);
-    if (!situation[l_fork] && !situation[r_fork] && !situation[ptr->philo_position])
-    {
-        situation[ptr->philo_position] = 1;
-        printf("Right fork was taken🍴\n");
-        printf("Left fork was taken🍴\n");
-    }
-    pthread_mutex_unlock(&ptr->setter->right_fork);
+	if (ptr->setter->philosoph_counter == 1)
+	{
+		fy_printf(ptr, "Left fork was taken🍴");
+		fy_printf(ptr, "Philosopher died💀");
+		return(0);
+	}
+	i = ptr->setter->philosoph_counter;
+	situation = ptr->setter->situation;
+	pthread_mutex_lock(&ptr->setter->forks[ptr->philo_position + 1 % i]);
+	pthread_mutex_lock(&ptr->setter->forks[ptr->philo_position]);
+	if (!situation[ptr->philo_position])
+	{
+		situation[ptr->philo_position] = 1;
+		if (!fy_printf(ptr, "Right fork was taken🍴"))
+			return(0);
+		if (!fy_printf(ptr, "Left fork was taken🍴"))
+			return(0);
+	}
+	return(1);
 }
 
 void    *mainer(void *philo)
 {
-    t_philo *phil;
+	t_philo *phil;
 
-    phil = (t_philo *)philo;
-    phil->last_eat = timeinc(0);
-    while (1)
-    {
-        if (phil->philo_position % 2 != 0)
-            usleep(200);
-        if (phil->setter->eat_counter && phil->setter->eat_destination_timer
-            >= phil->setter->philosoph_counter)
-        {
-            pthread_mutex_lock(&phil->setter->left_fork);
-            printf("---Food at least %d times---\n",phil->setter->eat_destination_timer);
-            exit(0);
-        }
-        thinking(phil);
-        eating(phil);
-        sleeping(phil);
-    }
-    return(NULL);
+	phil = (t_philo *)philo;
+	phil->last_eat = timeinc(0);
+	if (phil->philo_position % 2 != 0)
+		usleep(2000);
+	while (1)
+	{
+		if (!thinking(phil))
+			break;
+		if (!eating(phil))
+			break;
+		if (!sleeping(phil))
+			break;
+	}
+	return(NULL);
 }
 
-void    thinking(t_philo *philo)
+int    thinking(t_philo *philo)
 {
-    long long timestamp;
+	long long timestamp;
 
-    while (!philo->setter->situation[philo->philo_position])
-    {
-        has_taken_fork(philo);
-        if (!philo->setter->situation[philo->philo_position])
-        {
-            if (timeinc(philo->last_eat) >= philo->setter->dead_time)
-            {
-                timestamp = timeinc(philo->timestamp);
-                pthread_mutex_lock(&philo->setter->left_fork);
-                printf("Time %lld | Philo Num : %d | died 💀\n",timestamp, philo->philo_position + 1);
-                exit(0);
-            }
-            exit(0);
-        }
-        ft_sleep(1);
-    }
-    usleep(100);
+	if (!has_taken_fork(philo))
+		return(0);
+	if (timeinc(philo->last_eat) >= philo->setter->dead_time)
+	{
+		timestamp = timeinc(philo->timestamp);
+		if (fy_printf(philo, "Philosopher died💀💀💀"))
+			return(0);
+		philo->setter->death_check = 1;
+	}
+		return (1);
 }
 
-void    eating(t_philo *philo)
+int    eating(t_philo *philo)
 {
-    if (philo->setter->situation[philo->philo_position])
-    {
-        philo->last_eat = timeinc(0);
-        fy_printf(philo, "is eating 🍕");
-        ft_sleep(philo->setter->eat_time);
-        if (philo->eat < philo->setter->eat_destination_timer)
-            philo->eat++;
-        if (!philo->full && philo->eat == philo->setter->eat_destination_timer)
-        {
-            philo->setter->eat_counter++;
-            philo->full++;
-        }
-    }
+	if (philo->setter->situation[philo->philo_position])
+	{
+		int i;
+
+		i = philo->setter->philosoph_counter;
+		philo->last_eat = timeinc(0);
+		if (!fy_printf(philo, "is eating 🍕"))
+		{
+			pthread_mutex_unlock(&philo->setter->forks[philo->philo_position + 1 % i]);
+			pthread_mutex_unlock(&philo->setter->forks[philo->philo_position]);
+			return (0);
+		}
+		ft_sleep(philo->setter->eat_time);
+		pthread_mutex_unlock(&philo->setter->forks[philo->philo_position + 1 % i]);
+		pthread_mutex_unlock(&philo->setter->forks[philo->philo_position]);
+		philo->eat++;
+		if (philo->eat == philo->setter->eat_destination)
+		{
+			pthread_mutex_lock(&philo->setter->dest_philo);
+			philo->setter->destp_count++;
+			pthread_mutex_unlock(&philo->setter->dest_philo);
+		}
+		if (philo->setter->destp_count == philo->setter->philosoph_counter)
+		{
+			printf("---Food at least %d times---", philo->setter->eat_destination);
+			philo->setter->eat_check = 1;
+		}
+	}
+	return (1);
 }
 
-void    sleeping(t_philo *philo)
+int    sleeping(t_philo *philo)
 {
-    long long   x;
-    if (philo->setter->situation[philo->philo_position])
-    {
-        printf("Philosoph is sleeping right now🌙💤\n");
-        pthread_mutex_lock(&philo->setter->right_fork);
-        philo->setter->situation[philo->philo_position] = 0;
-        pthread_mutex_unlock(&philo->setter->right_fork);
-        x = timeinc(0);
-        while (philo->setter->sleep_time > timeinc(0) - x)
-        {
-            if (timeinc(philo->last_eat) >= philo->setter->dead_time)
-            {
-                pthread_mutex_lock(&philo->setter->left_fork);
-                printf("The philosopher died💀💀💀\n");
-                exit(0);
-            }
-            sleep(100);
-        }
-        fy_printf(philo, "Philo is sleeping💤💤💤");
-    }
+	if (philo->setter->situation[philo->philo_position])
+	{
+		if (!fy_printf(philo, "Philosoph is sleeping right now🌙💤"))
+			return (0);
+		ft_sleep(philo->setter->sleep_time);
+		if (timeinc(philo->last_eat) >= philo->setter->dead_time)
+		{
+			if (!fy_printf(philo, "Philosopher died💀💀💀"))
+				return(0);
+			philo->setter->death_check = 1;
+		}
+		if (!fy_printf(philo, "Philo is thinking💭💭💭"))
+			return(0);
+	}
+	return (1);
 }

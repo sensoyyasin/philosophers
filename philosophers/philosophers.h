@@ -6,7 +6,7 @@
 /*   By: ysensoy <ysensoy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 16:39:46 by ysensoy           #+#    #+#             */
-/*   Updated: 2022/09/14 16:24:18 by ysensoy          ###   ########.fr       */
+/*   Updated: 2022/09/21 17:13:09 by ysensoy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <stdlib.h>
 # include <pthread.h>
 # include <sys/time.h>
+# include <stdbool.h>
 
 typedef	struct setter t_setter;
 
@@ -27,41 +28,43 @@ typedef	struct philo
 	pthread_t		t_id;
 	struct setter *setter;
 	int 		philo_position;
-	int			full;
 	int 		eat;
 	long long	last_eat;
-	char		think;
-	int 		sleep;
 	long long 	timestamp;
 }		t_philo;
 
 typedef struct setter
 {
-	pthread_mutex_t	right_fork;
-	pthread_mutex_t	left_fork;
+	pthread_mutex_t	*forks;
+	pthread_mutex_t	dest_philo;
+	pthread_mutex_t	msg;
 	t_philo		*philosoph;
 	char		*situation;
 	int			philosoph_counter;
 	int			dead_time;
 	int			eat_time;
 	int 		sleep_time;
-	int			eat_destination_timer;
-	int			eat_counter;
+	int			eat_destination;
+	int			destp_count;
+	int			eat_check;
+	int			death_check;
 }		t_setter;
 
 //mainer
-void    *mainer(void *philo);
-void    eating(t_philo *philo);
-void    sleeping(t_philo *philo);
-void    thinking(t_philo *philo);
+void	*mainer(void *philo);
+int		eating(t_philo *philo);
+int		sleeping(t_philo *philo);
+int		thinking(t_philo *philo);
 
 //utils
 int		ft_atoi(char *str);
-void	arg_controller(int argc, char **argv);
+int		arg_controller(int argc, char **argv);
 long	timeinc(long timestamp);
-void    has_taken_fork(t_philo *ptr);
-void	fy_printf(t_philo *ptr, char *str);
+int		has_taken_fork(t_philo *ptr);
+int		fy_printf(t_philo *ptr, char *str);
 void	ft_sleep(int now);
 long	timeinc(long timestamp);
+int		ctrl(int dead);
+
 
 #endif
