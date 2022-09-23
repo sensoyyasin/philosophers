@@ -6,7 +6,7 @@
 /*   By: ysensoy <ysensoy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 18:04:28 by ysensoy           #+#    #+#             */
-/*   Updated: 2022/09/21 17:18:01 by ysensoy          ###   ########.fr       */
+/*   Updated: 2022/09/23 17:10:13 by ysensoy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ int 	arg_controller(int argc, char **argv)
 		}
 		i++;
 	}
+
 	return(0);
 }
 
