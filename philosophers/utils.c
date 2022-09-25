@@ -6,7 +6,7 @@
 /*   By: ysensoy <ysensoy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 18:04:28 by ysensoy           #+#    #+#             */
-/*   Updated: 2022/09/23 17:10:13 by ysensoy          ###   ########.fr       */
+/*   Updated: 2022/09/25 17:41:38 by ysensoy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,27 +33,30 @@ int	ft_atoi(char *str)
 	return(result * sign);
 }
 
-int 	arg_controller(int argc, char **argv)
+int 	arg_controller(int argc, char **argv, int i, int j)
 {
-	int i;
-
-	i = 1;
 	if (argc != 5 && argc != 6)
 	{
 		write(2, "Number of argument is fault ❌\n", 32);
 		return(-1);
 	}
-	while (argv[i] != NULL)
+	while (i < argc)
 	{
-		if ((ft_atoi(argv[i]) <= 0))
+		while (argv[i][j] != '\0')
 		{
-			printf("You should use different number🔢 \n");
-			return(-1);
+			if ((argv[i][j] >= '0' && argv[i][j] <= '9'))
+				j++;
+			else if (j == 0 && argv[i][j] == '+' && argv[i][j + 1] > 32)
+				j++;
+			else
+				return (-1);
 		}
+		j = 0;
+		if (ft_atoi(argv[i]) <= 0)
+			return (-1);
 		i++;
 	}
-
-	return(0);
+	return(1);
 }
 
 int		fy_printf(t_philo *ptr, char *str)
@@ -64,7 +67,7 @@ int		fy_printf(t_philo *ptr, char *str)
 		pthread_mutex_unlock(&ptr->setter->msg);
 		return(0);
 	}
-	printf("Time : %ld | Philosoph_id : %d | %s\n",
+	printf("timestamp_in_ms %ld | Philosoph_id : %d | %s\n",
 		timeinc(ptr->timestamp), ptr->philo_position + 1, str);
 	pthread_mutex_unlock(&ptr->setter->msg);
 	return(1);

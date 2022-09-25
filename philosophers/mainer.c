@@ -6,7 +6,7 @@
 /*   By: ysensoy <ysensoy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/05 17:10:34 by ysensoy           #+#    #+#             */
-/*   Updated: 2022/09/21 17:58:41 by ysensoy          ###   ########.fr       */
+/*   Updated: 2022/09/25 17:14:39 by ysensoy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ int    has_taken_fork(t_philo *ptr)
 	if (ptr->setter->philosoph_counter == 1)
 	{
 		fy_printf(ptr, "Left fork was taken🍴");
+		ft_sleep(ptr->setter->dead_time);
 		fy_printf(ptr, "Philosopher died💀");
 		return(0);
 	}
@@ -27,14 +28,11 @@ int    has_taken_fork(t_philo *ptr)
 	situation = ptr->setter->situation;
 	pthread_mutex_lock(&ptr->setter->forks[ptr->philo_position + 1 % i]);
 	pthread_mutex_lock(&ptr->setter->forks[ptr->philo_position]);
-	if (!situation[ptr->philo_position])
-	{
-		situation[ptr->philo_position] = 1;
-		if (!fy_printf(ptr, "Right fork was taken🍴"))
+	situation[ptr->philo_position] = 1;
+		if (!fy_printf(ptr, "Right fork has taken🍴"))
 			return(0);
-		if (!fy_printf(ptr, "Left fork was taken🍴"))
+		if (!fy_printf(ptr, "Left fork has taken🍴"))
 			return(0);
-	}
 	return(1);
 }
 

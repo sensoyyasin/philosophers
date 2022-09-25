@@ -6,7 +6,7 @@
 /*   By: ysensoy <ysensoy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 16:50:29 by ysensoy           #+#    #+#             */
-/*   Updated: 2022/09/23 17:07:14 by ysensoy          ###   ########.fr       */
+/*   Updated: 2022/09/25 17:43:41 by ysensoy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int main(int argc, char **argv)
 	i = 0;
 	a.death_check = 0;
 	a.eat_check = 0;
-	if (arg_controller(argc, argv) == -1)
+	if (arg_controller(argc, argv, 1, 0) == -1)
 		return(1);
 	setter(&a, argv);
 	while (a.philosoph_counter > i)
