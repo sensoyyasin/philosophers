@@ -6,7 +6,7 @@
 /*   By: ysensoy <ysensoy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 16:50:29 by ysensoy           #+#    #+#             */
-/*   Updated: 2022/09/30 15:15:55 by ysensoy          ###   ########.fr       */
+/*   Updated: 2022/09/30 18:45:22 by ysensoy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	program_ender(t_setter	*setter)
 	free(setter->situation);
 	free(setter->philosoph->t_id);
 	free(setter);
-	return(0);
+	return (0);
 }
 
 void	setter(t_setter *ptr, char **argv)
@@ -50,13 +50,13 @@ void	setter(t_setter *ptr, char **argv)
 		ptr->philosoph[i].timestamp = timeinc(0);
 		ptr->situation[i] = 0;
 		ptr->philosoph[i].eat = 0;
-		ptr->philosoph[i].philo_position = i;
+		ptr->philosoph[i].p_pos = i;
 		pthread_mutex_init(&ptr->forks[i], NULL);
 		i++;
 	}
 }
 
-int main(int argc, char **argv)
+int	main(int argc, char **argv)
 {
 	t_setter	a;
 	int			i;
@@ -65,7 +65,7 @@ int main(int argc, char **argv)
 	a.death_check = 0;
 	a.eat_check = 0;
 	if (arg_controller(argc, argv, 1, 0) == -1)
-		return(1);
+		return (1);
 	setter(&a, argv);
 	while (a.philosoph_counter > i)
 	{
@@ -75,8 +75,8 @@ int main(int argc, char **argv)
 	i = 0;
 	while (a.philosoph_counter > i)
 	{
-		pthread_join(a.philosoph[i].t_id , NULL);
+		pthread_join(a.philosoph[i].t_id, NULL);
 		i++;
 	}
-	return(0);
+	return (0);
 }
