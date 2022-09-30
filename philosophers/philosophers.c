@@ -6,7 +6,7 @@
 /*   By: ysensoy <ysensoy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 16:50:29 by ysensoy           #+#    #+#             */
-/*   Updated: 2022/09/25 17:43:41 by ysensoy          ###   ########.fr       */
+/*   Updated: 2022/09/30 15:15:55 by ysensoy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,10 @@ void	setter(t_setter *ptr, char **argv)
 	ptr->dead_time = ft_atoi(argv[2]);
 	ptr->eat_time = ft_atoi(argv[3]);
 	ptr->sleep_time = ft_atoi(argv[4]);
-	ptr->destp_count = 0;
-	ptr->forks = malloc(sizeof(pthread_mutex_t) * ptr->philosoph_counter);
 	if (argv[5] != NULL)
 		ptr->eat_destination = ft_atoi(argv[5]);
+	ptr->forks = malloc(sizeof(pthread_mutex_t) * ptr->philosoph_counter);
+	ptr->destp_count = 0;
 	ptr->philosoph = malloc(sizeof(t_philo) * ptr->philosoph_counter);
 	ptr->situation = malloc(ptr->philosoph_counter);
 	pthread_mutex_init(&ptr->dest_philo, NULL);

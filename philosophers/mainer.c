@@ -6,7 +6,7 @@
 /*   By: ysensoy <ysensoy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/05 17:10:34 by ysensoy           #+#    #+#             */
-/*   Updated: 2022/09/25 17:14:39 by ysensoy          ###   ########.fr       */
+/*   Updated: 2022/09/30 16:46:36 by ysensoy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,12 +62,11 @@ int    thinking(t_philo *philo)
 
 	if (!has_taken_fork(philo))
 		return(0);
-	if (timeinc(philo->last_eat) >= philo->setter->dead_time)
+	if (timeinc(philo->last_eat) >= philo->setter->dead_time && philo->setter->death_check == 0)
 	{
 		timestamp = timeinc(philo->timestamp);
 		if (fy_printf(philo, "Philosopher died💀💀💀"))
-			return(0);
-		philo->setter->death_check = 1;
+			philo->setter->death_check = 1;
 	}
 		return (1);
 }
@@ -80,7 +79,7 @@ int    eating(t_philo *philo)
 
 		i = philo->setter->philosoph_counter;
 		philo->last_eat = timeinc(0);
-		if (!fy_printf(philo, "is eating 🍕"))
+		if (!fy_printf(philo, "Philosopher is eating 🍕"))
 		{
 			pthread_mutex_unlock(&philo->setter->forks[philo->philo_position + 1 % i]);
 			pthread_mutex_unlock(&philo->setter->forks[philo->philo_position]);
@@ -112,11 +111,10 @@ int    sleeping(t_philo *philo)
 		if (!fy_printf(philo, "Philosoph is sleeping right now🌙💤"))
 			return (0);
 		ft_sleep(philo->setter->sleep_time);
-		if (timeinc(philo->last_eat) >= philo->setter->dead_time)
+		if (timeinc(philo->last_eat) >= philo->setter->dead_time && philo->setter->death_check == 0)
 		{
-			if (!fy_printf(philo, "Philosopher died💀💀💀"))
-				return(0);
-			philo->setter->death_check = 1;
+			if (!fy_printf(philo, "Philosopher died💀💀"))
+				philo->setter->death_check = 1;
 		}
 		if (!fy_printf(philo, "Philo is thinking💭💭💭"))
 			return(0);
